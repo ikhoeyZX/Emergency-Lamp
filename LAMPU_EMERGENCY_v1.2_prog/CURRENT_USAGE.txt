@@ -1,0 +1,2 @@
+~60mA run full power
+~20mA low battery
