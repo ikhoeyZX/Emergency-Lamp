@@ -11611,7 +11611,7 @@ W = angled&lt;p&gt;
 <schematic_group name="FLASH_PIN"/>
 </groups>
 <parts>
-<part name="SL1" library="con-amp-quick" library_urn="urn:adsk.eagle:library:125" deviceset="M03" device="" package3d_urn="urn:adsk.eagle:package:5957/1" value="VIBRATION_X"/>
+<part name="SL1" library="con-amp-quick" library_urn="urn:adsk.eagle:library:125" deviceset="M03" device="" package3d_urn="urn:adsk.eagle:package:5957/1" value="VIBRATION_Y"/>
 <part name="+3V5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -11680,7 +11680,7 @@ W = angled&lt;p&gt;
 <part name="Q1" library="transistor-power" deviceset="IRF540" device="D2PACK" package3d_urn="urn:adsk.eagle:package:29497/2"/>
 <part name="T6" library="transistor" library_urn="urn:adsk.eagle:library:402" deviceset="BC846" device="" package3d_urn="urn:adsk.eagle:package:28738/2" value="SS8050"/>
 <part name="R33" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="M1206" package3d_urn="urn:adsk.eagle:package:23566/2" value="10K"/>
-<part name="SL3" library="con-amp-quick" library_urn="urn:adsk.eagle:library:125" deviceset="M03" device="" package3d_urn="urn:adsk.eagle:package:5957/1" value="VIBRATION_Y"/>
+<part name="SL3" library="con-amp-quick" library_urn="urn:adsk.eagle:library:125" deviceset="M03" device="" package3d_urn="urn:adsk.eagle:package:5957/1" value="VIBRATION_X"/>
 <part name="U$2" library="STM8-blue" deviceset="STM8_DEV_NOFLASHPIN" device=""/>
 <part name="H4" library="LilyPad-Wearables" deviceset="SEW_HOLE" device=""/>
 <part name="X1" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2041" device="" package3d_urn="urn:adsk.eagle:package:8078635/1" value="BATTERY_1"/>
@@ -11839,13 +11839,13 @@ AC: 230V, DC: 400V</text>
 <instance part="GND1" gate="1" x="134.62" y="-66.04" smashed="yes" grouprefs="AC_DET">
 <attribute name="VALUE" x="132.08" y="-68.58" size="1.778" layer="96"/>
 </instance>
-<instance part="U$1" gate="G$1" x="106.68" y="43.18" smashed="yes" grouprefs="ADAPTOR"/>
+<instance part="U$1" gate="G$1" x="109.22" y="43.18" smashed="yes" grouprefs="ADAPTOR"/>
 <instance part="U$3" gate="G$1" x="60.96" y="-7.62" smashed="yes" rot="MR0" grouprefs="VOLTAGE_REGULATOR">
 <attribute name="NAME" x="73.66" y="7.62" size="1.778" layer="95" rot="MR0"/>
 <attribute name="VALUE" x="73.66" y="5.08" size="1.778" layer="96" rot="MR0"/>
 </instance>
-<instance part="GND2" gate="1" x="132.08" y="48.26" smashed="yes" grouprefs="ADAPTOR">
-<attribute name="VALUE" x="129.54" y="45.72" size="1.778" layer="96"/>
+<instance part="GND2" gate="1" x="134.62" y="48.26" smashed="yes" grouprefs="ADAPTOR">
+<attribute name="VALUE" x="132.08" y="45.72" size="1.778" layer="96"/>
 </instance>
 <instance part="GND13" gate="1" x="-10.16" y="-20.32" smashed="yes" grouprefs="5V_DET">
 <attribute name="VALUE" x="-12.7" y="-22.86" size="1.778" layer="96"/>
@@ -12040,19 +12040,19 @@ AC: 230V, DC: 400V</text>
 <instance part="GND4" gate="1" x="-15.24" y="78.74" smashed="yes">
 <attribute name="VALUE" x="-17.78" y="76.2" size="1.778" layer="96"/>
 </instance>
-<instance part="SV1" gate="1" x="60.96" y="40.64" smashed="yes" rot="R180" grouprefs="FLASH_PIN">
-<attribute name="VALUE" x="62.23" y="50.8" size="1.778" layer="96" rot="R180"/>
-<attribute name="NAME" x="62.23" y="34.798" size="1.778" layer="95" rot="R180"/>
+<instance part="SV1" gate="1" x="63.5" y="40.64" smashed="yes" rot="R180" grouprefs="FLASH_PIN">
+<attribute name="VALUE" x="64.77" y="50.8" size="1.778" layer="96" rot="R180"/>
+<attribute name="NAME" x="64.77" y="34.798" size="1.778" layer="95" rot="R180"/>
 </instance>
-<instance part="+3V3" gate="G$1" x="33.02" y="50.8" smashed="yes" grouprefs="FLASH_PIN">
-<attribute name="VALUE" x="30.48" y="45.72" size="1.778" layer="96" rot="R90"/>
+<instance part="+3V3" gate="G$1" x="35.56" y="50.8" smashed="yes" grouprefs="FLASH_PIN">
+<attribute name="VALUE" x="33.02" y="45.72" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="GND6" gate="1" x="33.02" y="33.02" smashed="yes" grouprefs="FLASH_PIN">
-<attribute name="VALUE" x="30.48" y="30.48" size="1.778" layer="96"/>
+<instance part="GND6" gate="1" x="35.56" y="33.02" smashed="yes" grouprefs="FLASH_PIN">
+<attribute name="VALUE" x="33.02" y="30.48" size="1.778" layer="96"/>
 </instance>
-<instance part="C1" gate="G$1" x="33.02" y="43.18" smashed="yes" grouprefs="FLASH_PIN">
-<attribute name="NAME" x="34.544" y="43.561" size="1.778" layer="95"/>
-<attribute name="VALUE" x="32.639" y="34.544" size="1.778" layer="96" rot="R90"/>
+<instance part="C1" gate="G$1" x="35.56" y="43.18" smashed="yes" grouprefs="FLASH_PIN">
+<attribute name="NAME" x="37.084" y="43.561" size="1.778" layer="95"/>
+<attribute name="VALUE" x="35.179" y="34.544" size="1.778" layer="96" rot="R90"/>
 </instance>
 </instances>
 <busses>
@@ -12115,8 +12115,8 @@ AC: 230V, DC: 400V</text>
 <segment>
 <pinref part="U$1" gate="G$1" pin="-VO"/>
 <pinref part="GND2" gate="1" pin="GND"/>
-<wire x1="130.984" y1="51.856" x2="132.08" y2="51.856" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
-<wire x1="132.08" y1="51.856" x2="132.08" y2="50.8" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
+<wire x1="133.524" y1="51.856" x2="134.62" y2="51.856" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
+<wire x1="134.62" y1="51.856" x2="134.62" y2="50.8" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
 </segment>
 <segment>
 <pinref part="GND13" gate="1" pin="GND"/>
@@ -12183,12 +12183,12 @@ AC: 230V, DC: 400V</text>
 <segment>
 <pinref part="C1" gate="G$1" pin="2"/>
 <pinref part="GND6" gate="1" pin="GND"/>
-<wire x1="33.02" y1="38.1" x2="33.02" y2="35.56" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
+<wire x1="35.56" y1="38.1" x2="35.56" y2="35.56" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
 <pinref part="SV1" gate="1" pin="3"/>
-<wire x1="40.64" y1="40.64" x2="53.34" y2="40.64" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
-<wire x1="40.64" y1="40.64" x2="40.64" y2="38.1" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
-<wire x1="40.64" y1="38.1" x2="33.02" y2="38.1" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
-<junction x="33.02" y="38.1" grouprefs="FLASH_PIN"/>
+<wire x1="43.18" y1="40.64" x2="55.88" y2="40.64" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
+<wire x1="43.18" y1="40.64" x2="43.18" y2="38.1" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
+<wire x1="43.18" y1="38.1" x2="35.56" y2="38.1" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
+<junction x="35.56" y="38.1" grouprefs="FLASH_PIN"/>
 </segment>
 </net>
 <net name="+3V3" class="0">
@@ -12226,30 +12226,11 @@ AC: 230V, DC: 400V</text>
 </segment>
 <segment>
 <pinref part="+3V3" gate="G$1" pin="+3V3"/>
-<wire x1="33.02" y1="48.26" x2="33.02" y2="45.72" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
+<wire x1="35.56" y1="48.26" x2="35.56" y2="45.72" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
 <pinref part="SV1" gate="1" pin="1"/>
-<wire x1="33.02" y1="45.72" x2="53.34" y2="45.72" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
+<wire x1="35.56" y1="45.72" x2="55.88" y2="45.72" width="0.1524" layer="91" grouprefs="FLASH_PIN"/>
 <pinref part="C1" gate="G$1" pin="1"/>
-<junction x="33.02" y="45.72" grouprefs="FLASH_PIN"/>
-</segment>
-</net>
-<net name="VIB_SEN" class="0">
-<segment>
-<wire x1="2.54" y1="58.42" x2="12.7" y2="58.42" width="0.1524" layer="91" grouprefs="MCU"/>
-<label x="7.62" y="58.42" size="1.778" layer="95" grouprefs="MCU"/>
-<pinref part="U$2" gate="G$1" pin="A2"/>
-<junction x="12.7" y="58.42"/>
-</segment>
-<segment>
-<pinref part="SL1" gate="G$1" pin="2"/>
-<wire x1="109.22" y1="-10.16" x2="109.22" y2="-15.24" width="0.1524" layer="91" grouprefs="VIBRATION_SENSOR"/>
-<junction x="109.22" y="-20.32" grouprefs="VIBRATION_SENSOR"/>
-<label x="96.52" y="-20.32" size="1.778" layer="95" grouprefs="VIBRATION_SENSOR"/>
-<pinref part="SL3" gate="G$1" pin="2"/>
-<wire x1="109.22" y1="-15.24" x2="109.22" y2="-20.32" width="0.1524" layer="91" grouprefs="VIBRATION_SENSOR"/>
-<wire x1="109.22" y1="-15.24" x2="127" y2="-15.24" width="0.1524" layer="91" grouprefs="VIBRATION_SENSOR"/>
-<wire x1="127" y1="-15.24" x2="127" y2="-10.16" width="0.1524" layer="91" grouprefs="VIBRATION_SENSOR"/>
-<junction x="109.22" y="-15.24" grouprefs="VIBRATION_SENSOR"/>
+<junction x="35.56" y="45.72" grouprefs="FLASH_PIN"/>
 </segment>
 </net>
 <net name="BAT1" class="0">
@@ -12472,10 +12453,10 @@ AC: 230V, DC: 400V</text>
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="+VO"/>
-<wire x1="130.984" y1="33.856" x2="134.62" y2="33.856" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
-<wire x1="134.62" y1="33.856" x2="134.62" y2="35.56" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
-<junction x="134.62" y="35.56" grouprefs="ADAPTOR"/>
-<label x="127" y="30.48" size="1.778" layer="95" grouprefs="ADAPTOR"/>
+<wire x1="133.524" y1="33.856" x2="137.16" y2="33.856" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
+<wire x1="137.16" y1="33.856" x2="137.16" y2="35.56" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
+<junction x="137.16" y="35.56" grouprefs="ADAPTOR"/>
+<label x="129.54" y="30.48" size="1.778" layer="95" grouprefs="ADAPTOR"/>
 </segment>
 <segment>
 <wire x1="-2.54" y1="-50.8" x2="-10.16" y2="-50.8" width="0.1524" layer="91" grouprefs="TP4056"/>
@@ -12626,10 +12607,10 @@ AC: 230V, DC: 400V</text>
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="1AC"/>
-<wire x1="82.884" y1="45.856" x2="82.884" y2="50.8" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
-<wire x1="82.884" y1="50.8" x2="81.28" y2="50.8" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
-<junction x="81.28" y="50.8" grouprefs="ADAPTOR"/>
-<label x="73.66" y="50.8" size="1.778" layer="95" grouprefs="ADAPTOR"/>
+<wire x1="85.424" y1="45.856" x2="85.424" y2="50.8" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
+<wire x1="85.424" y1="50.8" x2="83.82" y2="50.8" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
+<junction x="83.82" y="50.8" grouprefs="ADAPTOR"/>
+<label x="76.2" y="50.8" size="1.778" layer="95" grouprefs="ADAPTOR"/>
 </segment>
 </net>
 <net name="AC_NEUTRAL" class="0">
@@ -12660,10 +12641,10 @@ AC: 230V, DC: 400V</text>
 </segment>
 <segment>
 <pinref part="U$1" gate="G$1" pin="2AC"/>
-<wire x1="82.984" y1="39.856" x2="82.984" y2="35.56" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
-<wire x1="82.984" y1="35.56" x2="81.28" y2="35.56" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
-<junction x="81.28" y="35.56" grouprefs="ADAPTOR"/>
-<label x="73.66" y="33.02" size="1.778" layer="95" grouprefs="ADAPTOR"/>
+<wire x1="85.524" y1="39.856" x2="85.524" y2="35.56" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
+<wire x1="85.524" y1="35.56" x2="83.82" y2="35.56" width="0.1524" layer="91" grouprefs="ADAPTOR"/>
+<junction x="83.82" y="35.56" grouprefs="ADAPTOR"/>
+<label x="76.2" y="33.02" size="1.778" layer="95" grouprefs="ADAPTOR"/>
 </segment>
 </net>
 <net name="N$5" class="0">
@@ -12830,7 +12811,7 @@ AC: 230V, DC: 400V</text>
 </segment>
 <segment>
 <pinref part="SV1" gate="1" pin="2"/>
-<wire x1="53.34" y1="43.18" x2="43.18" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="43.18" x2="43.18" y2="43.18" width="0.1524" layer="91"/>
 <junction x="43.18" y="43.18"/>
 <label x="43.18" y="43.18" size="1.778" layer="95"/>
 </segment>
@@ -12844,9 +12825,37 @@ AC: 230V, DC: 400V</text>
 </segment>
 <segment>
 <pinref part="SV1" gate="1" pin="4"/>
-<wire x1="53.34" y1="38.1" x2="48.26" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="38.1" x2="48.26" y2="38.1" width="0.1524" layer="91"/>
 <junction x="48.26" y="38.1"/>
 <label x="43.18" y="35.56" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="VIB_SEN_X" class="0">
+<segment>
+<wire x1="2.54" y1="58.42" x2="12.7" y2="58.42" width="0.1524" layer="91" grouprefs="MCU"/>
+<label x="7.62" y="58.42" size="1.778" layer="95" grouprefs="MCU"/>
+<pinref part="U$2" gate="G$1" pin="A2"/>
+<junction x="12.7" y="58.42"/>
+</segment>
+<segment>
+<pinref part="SL3" gate="G$1" pin="2"/>
+<wire x1="127" y1="-15.24" x2="127" y2="-10.16" width="0.1524" layer="91" grouprefs="VIBRATION_SENSOR"/>
+<junction x="127" y="-15.24"/>
+<label x="121.92" y="-17.78" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="VIB_SEN_Y" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="A1"/>
+<wire x1="2.54" y1="55.88" x2="12.7" y2="55.88" width="0.1524" layer="91"/>
+<junction x="12.7" y="55.88"/>
+<label x="7.62" y="55.88" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="SL1" gate="G$1" pin="2"/>
+<junction x="109.22" y="-20.32" grouprefs="VIBRATION_SENSOR"/>
+<label x="99.06" y="-22.86" size="1.778" layer="95" grouprefs="VIBRATION_SENSOR"/>
+<wire x1="109.22" y1="-10.16" x2="109.22" y2="-20.32" width="0.1524" layer="91" grouprefs="VIBRATION_SENSOR"/>
 </segment>
 </net>
 </nets>

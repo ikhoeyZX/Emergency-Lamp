@@ -19,7 +19,8 @@ const uint8_t BAT2_REY=4;   // Battery charger 2 mosfet
 const uint8_t BUZZER=5;     // Speaker buzzer type
 const uint8_t V5_ON=7;      // Adapt detector
 const uint8_t AC_DET=8;     // AC voltage detector
-const uint8_t VIB_SEN=PA2;  // Vibrator sensor
+const uint8_t VIB_SEN_X=PA1;  // Vibrator sensor
+const uint8_t VIB_SEN_Y=PA2;  // Vibrator sensor
 const uint8_t MOSFETOUT=13; // PIN LED_OUT
 
 // ANALOG
@@ -116,7 +117,8 @@ void setup() {
   pinMode(BUZZER, OUTPUT);
   pinMode(V5_ON, INPUT_PULLUP);
   pinMode(AC_DET, INPUT_PULLUP);
-  pinMode(VIB_SEN, INPUT_PULLUP);
+  pinMode(VIB_SEN_X, INPUT_PULLUP);
+  pinMode(VIB_SEN_Y, INPUT_PULLUP);
   pinMode(MOSFETOUT, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -134,7 +136,8 @@ void setup() {
 ///////////////////////////////////////////////////
 
   ledbuildin();
-  attachInterrupt(digitalPinToInterrupt(VIB_SEN), ISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(VIB_SEN_X), ISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(VIB_SEN_Y), ISR, CHANGE);
   Putarbuzzer(10);
   Putarbuzzer(20);
   Putarbuzzer(10);
