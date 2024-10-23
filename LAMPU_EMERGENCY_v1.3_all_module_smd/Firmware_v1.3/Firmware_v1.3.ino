@@ -28,28 +28,31 @@ const uint8_t LDR=PC4;
 const uint8_t BAT1=PD2;
 const uint8_t BAT2=PD3;
 
-// global value (overridden by system)
-unsigned long previousMillis = 0; 
-volatile bool adagempa=LOW;
+// VARIABLE
+volatile bool quakedet = LOW;
+const uint16_t LDRtrig = 200;	// Set LDR detect as no light
+const uint16_t limit = 2560; 	// Set limit count to reread battery since no need read battery every milis, max uint16_t is 65535
 
+uint16_t bat1cal = 512;		 // Battery calibration, need DMM to calibrate it
+uint16_t bat2cal = 512;		 // Battery calibration, need DMM to calibrate it
 
-const uint16_t LDRtrig=200;       // LDR trigger
-uint16_t bat1cal = 314;       
-uint16_t bat2cal = 314;
-uint16_t limit=2260;              //set limit count to reread battery since no need read battery every milis, max uint16_t is 65535
-float bat1s=0,bat2s=0;
-uint16_t count=0;
+float bat1s=0,bat2s = 0;		// Set default battery condition
+float battery_full = 4.18;  // battery full
+float battery_low = 3.35;   // battery empty
+
+uint16_t count = 0;         // counting to trigger "limit"
+bool buzzcall = false;      // time loop buzzer ring
 
 /*********
 //
 // Speaker
 //
 **********/
-void Putarbuzzer(unsigned int durasi){  // play speaker
-    digitalWrite(BUZZER,HIGH);
-    delay(durasi);
-    digitalWrite(BUZZER,LOW);
-    delay(durasi/2);
+void buzzer(uint16_t duration){  // max 65535ms should be enough
+  digitalWrite(BUZZER,HIGH);
+  delay(duration);
+  digitalWrite(BUZZER,LOW);
+  delay(duration/2);
 }
  
 
@@ -60,18 +63,18 @@ void Putarbuzzer(unsigned int durasi){  // play speaker
 **********/
 float baterai(uint8_t pinbat, uint16_t batcal, uint8_t relaypin, bool pilih){  // read battery
   float a=0; 
-  for(uint8_t b=0;b<10;b++){    // Smoothing battery value
+  for(uint8_t b=0; b<10; b++){    // Smoothing battery value
     a = a + ((analogRead(pinbat) * (3.3 / batcal)));
     delay(1);
   }
   a = a/10;
   
   if(!pilih){ // flipped since P-channel mosfet
-    if(a>= 4.16){ // when battery full
+    if(a >= battery_full){ // when battery full
       digitalWrite(relaypin, LOW);  
     }else if(a <= 1){  // when no battery
       digitalWrite(relaypin, LOW); 
-    }else if(a <= 3.90 && a > 1){  // when battery low
+    }else if(a <= (battery_full - 0.28) && a > 1){  // when battery low
       digitalWrite(relaypin, HIGH);
     }
   }else{ // when battery finished charger
@@ -91,18 +94,19 @@ void ledbuildin(){
 bool smoothlogic(uint16_t sensorin){  // smoothing digital AC detector
   uint8_t acc=0;
 
-  for(uint8_t c=0; c<5;c++){
+  for(uint8_t c=0; c<5; c++){
     acc = acc + digitalRead(sensorin);
     delay(1);
   }
   if(acc >3){   // when AC voltage detected high for 3x
     return HIGH;
   }
+
   return LOW;
 }
 
 void ISR(){ // Interrupt because quake sensor trigger (tilt sensor)
-  adagempa = HIGH;
+  quakedet = HIGH;
   digitalWrite(BUZZER,HIGH);
 }
 
@@ -112,6 +116,7 @@ void ISR(){ // Interrupt because quake sensor trigger (tilt sensor)
 //
 **********/
 void setup() {
+  // DIGITAL PIN
   pinMode(BAT1_REY, OUTPUT);
   pinMode(BAT2_REY, OUTPUT);
   pinMode(BUZZER, OUTPUT);
@@ -138,9 +143,9 @@ void setup() {
   ledbuildin();
   attachInterrupt(digitalPinToInterrupt(VIB_SEN_X), ISR, CHANGE);
   attachInterrupt(digitalPinToInterrupt(VIB_SEN_Y), ISR, CHANGE);
-  Putarbuzzer(10);
-  Putarbuzzer(20);
-  Putarbuzzer(10);
+  buzzer(10);
+  buzzer(20);
+  buzzer(10);
 
   // Read battery now!
   bool v5_on = digitalRead(V5_ON);
@@ -159,19 +164,24 @@ void loop() {
   bool ac = smoothlogic(AC_DET);
   uint16_t bacaldr = analogRead(LDR);
 
-  if(v5_on == HIGH && ac == LOW){ // Ring speaker when Adaptor not ready
-    Putarbuzzer(50);
-    Putarbuzzer(5);
-    Putarbuzzer(20);
-    Putarbuzzer(10);
+  if(buzzcall){
+
+  }else if(v5_on == HIGH && ac == LOW && !buzzcall){ // ring buzzer if adaptor not yet on but AC voltage exist
+    buzzer(50);
+    buzzer(5);
+    buzzer(20);
+    buzzer(10);
+
+    buzzcall = true;
   }
+
   if(count > limit){
     bat1s = baterai(BAT1, bat1cal, BAT1_REY, v5_on);  // Read battery 1
     bat2s = baterai(BAT2, bat2cal, BAT2_REY, v5_on);  // Read battery 2
     ledbuildin();  // blink led
 
 ///////////////////////////////////////////////////
-// uncomment bellow this to calibrate bat1 and bat2
+// uncomment bellow this to calibrate battery1 and battery2
 ///////////////////////////////////////////////////
 
     // Serial_print_s("\nBat1: ");
@@ -181,7 +191,8 @@ void loop() {
 
 ///////////////////////////////////////////////////
     
-    count=0; //reset counter
+    count = 0; //reset counter
+    buzzcall = false;
  }else{
     count++;
  }
@@ -195,47 +206,49 @@ void loop() {
     // Serial_print_s("DAC: ");
     // Serial_println_i(ac);
     // Serial_print_s("SGMP: ");
-    // Serial_println_i(adagempa);
+    // Serial_println_i(quakedet);
     // Serial_print_s("SLDR: ");
     // Serial_println_u(bacaldr);
 
 ///////////////////////////////////////////////////
 
 
-  if(adagempa == HIGH && bacaldr < LDRtrig ){   // Quake detected and it happen at night
+  if(quakedet == HIGH && bacaldr < LDRtrig ){   // Quake detected and it happen at night
     digitalWrite(MOSFETOUT, HIGH);
     ledbuildin();
 //    Serial_println_s("GMP_MLM");
     delay(500);
-    adagempa = LOW;
-  }else if(adagempa == HIGH){  // Quake detected and it happen at morning or afternoon
+    quakedet= LOW;
+  }else if(quakedet== HIGH){  // Quake detected and it happen at morning or afternoon
     digitalWrite(MOSFETOUT, LOW);
     ledbuildin();
 //    Serial_println_s("GMP_SNG");
-    adagempa = LOW;
+    quakedet = LOW;
   }
   digitalWrite(BUZZER,LOW); // Turn off buzzer after detect quake
 
 
-  if(bat1s <= 3.50 && bat2s <= 3.55 && ac == HIGH){ // Turn off mosfet output because low battery
+  if(!buzzcall){
+
+  }else if(bat1s <= battery_low && bat2s <= battery_low && ac == HIGH){ // Turn off mosfet output because low battery
     digitalWrite(MOSFETOUT, LOW);
 //    Serial_println_s("LWBAT");
-    delay(3000);
-  }else if(bat1s < 3.59 && bat2s <= 3.6 && ac == HIGH){ // Turn off mosfet output and ring speaker because low battery
-    digitalWrite(MOSFETOUT, LOW);
+    delay(10000);
+  }else if(bat1s < (battery_low + 0.2) && bat2s <= (battery_low + 0.2) && ac == HIGH && !buzzcall){ // Turn off mosfet output and ring speaker because low battery
+    digitalWrite(MOSFETOUT, HIGH);
 //    Serial_println_s("LWBAT_WRN");
-    Putarbuzzer(110);
-    Putarbuzzer(80);
-    Putarbuzzer(110);
-    delay(5000);
+    buzzer(110);
+    buzzer(80);
+    buzzer(110);
+    buzzcall = true;
   }else if(ac == HIGH && bacaldr < LDRtrig){  // Turn on mosfet because no AC voltage detected
     digitalWrite(MOSFETOUT, HIGH);
 //    Serial_println_s("NOACMLM"); 
   }else if(bat1s < 1 && bat2s < 1){   // Turn off mosfet output and ring speaker because battery not detected
     digitalWrite(MOSFETOUT, LOW);
-    Putarbuzzer(20);
-    Putarbuzzer(60);
-    Putarbuzzer(20);
+    buzzer(20);
+    buzzer(60);
+    buzzer(20);
 //    Serial_println_s("NOBAT");
     delay(2000);
   }else{      // Turn off mosfet output since no quake and ac voltage detected

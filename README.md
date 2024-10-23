@@ -10,15 +10,15 @@ In my country there is much earthquake, well because i'm life in ring of fire ar
 
 Most commercial emergency lamp in here are bad because cheap battery (only last 1 year and only hold 1.5h every running) and didn't have protection charger!!
 
-# How to build
+# What version i should make?
 
-There is 2 build exist (ESP8266 and STM8) for 1 layer recommended use v1.2 and for 2 layers smd build use v1.3
+There is 2 build exist (ESP8266 and STM8, arduino series will added later) for 1 layer recommended use v1.2 and for 2 layers smd build use v1.3
 
-each folder contains how to build it. You need Android IDE to program it (in STM8 case, use linux because win8 or newer doesn't really work sduino for now)
+each folder contains how to build it. You need Android IDE to program it (in STM8 case, make sure your username in PC doesn't have "space" otherwise SDCPP will fail to build because this bug not yet fixed from SDCC it self).
 
-* Note : For step-up ic/module you can find by self, depend of budget, because MOSFET output only act as "switch" so you need step-up to make sure it can output high voltage to light a leds (5v are common)
-* MOSFET should be withstand around ~4A continues with heatsink, so if you using step-up and output 5v it should be around ~4A Max in input side
-* In my case only use 1A at MOSFET output and 4400mA battery. it can run without issue around 4H with 20 leds (~40mA/leds) in 12 places at home (No need too bright, bright as candle are enough or around 1W/room)
+* Note : For step-up ic/module you can find by self, depend of budget, because MOSFET output only act as "switch" so you need step-up to make sure it can output high voltage to light a leds (5v are common but waste much power, i recommended use 4.3v output to reduce power usage)
+* MOSFET should be withstand around ~4A continues with heatsink, so if you using step-up and output set 4.3v it should be around ~4A Max in input side
+* In my case only use 1A at MOSFET output and 4400mA battery. it can run without issue around 4H with 20 leds (~30mA/leds) in 12 places at home.
 
 ## Finished device:
 

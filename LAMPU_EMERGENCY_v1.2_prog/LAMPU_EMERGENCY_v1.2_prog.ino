@@ -29,26 +29,30 @@ const uint8_t BAT1=PD2;		// READ BATTERY
 const uint8_t BAT2=PD3;		// READ BATTERY
 
 // VARIABLE
-volatile bool quakedet=LOW;
-const uint16_t LDRtrig=200;	// Set LDR detect as no light
+volatile bool quakedet = LOW;
+const uint16_t LDRtrig = 200;	// Set LDR detect as no light
+const uint16_t limit = 2560; 	// Set limit count to reread battery since no need read battery every milis, max uint16_t is 65535
 
-uint16_t bat1cal = 512;		// Battery calibration, need DMM to calibrate it
-uint16_t bat2cal = 512;		// Battery calibration, need DMM to calibrate it
+uint16_t bat1cal = 512;		 // Battery calibration, need DMM to calibrate it
+uint16_t bat2cal = 512;		 // Battery calibration, need DMM to calibrate it
 
-uint16_t limit=2560; 		// Set limit count to reread battery since no need read battery every milis, max uint16_t is 65535
-float bat1s=0,bat2s=0;		// Set default battery condition
-uint16_t count=0;
+float bat1s=0,bat2s = 0;		// Set default battery condition
+float battery_full = 4.18;  // battery full
+float battery_low = 3.35;   // battery empty
+
+uint16_t count = 0;         // counting to trigger "limit"
+bool buzzcall = false;      // time loop buzzer ring
 
 /*********
 //
 // Speaker
 //
 **********/
-void Buzzer(unsigned int duration){
-    digitalWrite(BUZZER,HIGH);
-    delay(duration);
-    digitalWrite(BUZZER,LOW);
-    delay(duration/2);
+void Buzzer(uint16_t duration){  // max 65535ms should be enough
+  digitalWrite(BUZZER,HIGH);
+  delay(duration);
+  digitalWrite(BUZZER,LOW);
+  delay(duration/2);
 }
  
 
@@ -57,23 +61,21 @@ void Buzzer(unsigned int duration){
 // Read battery
 //
 **********/
-float baterai(uint8_t pinbat, uint16_t batcal, uint8_t relaypin, bool selection){ 
-  float a=0;
-  for(uint8_t b=0;b<10;b++){
+float baterai(uint8_t pinbat, uint16_t batcal, uint8_t relaypin, bool pilih){  //baca baterai
+  float a = 0;
+  for(uint8_t b = 0; b < 10; b++){
     a = a + ((analogRead(pinbat) * (3.3 / batcal)));
     delay(2);
   }
   a = a/10;
   
-  if(selection==LOW){
-    if(a>= 4.16){
+  if(pilih == LOW){
+    if(a >= battery_full){
       digitalWrite(relaypin, HIGH);
     }else if(a <= 1){ 
       digitalWrite(relaypin, HIGH);
-    }else if(a <= 3.90 && a > 1){ 
+    }else if(a <= (battery_full - 0.28) && a > 1){ 
       digitalWrite(relaypin, LOW);
-    }else{
-
     }
   }else{
     digitalWrite(relaypin, HIGH);
@@ -100,17 +102,16 @@ void ledbuildin(){
 //
 **********/
 bool smoothlogic(uint16_t sensorin){
-  uint8_t acc=0;
+  uint8_t acc = 0;
 
-  for(uint8_t c=0; c<5;c++){
+  for(uint8_t c=0; c<5; c++){
     acc = acc + digitalRead(sensorin);
     delay(2);
   }
   if(acc >3){
     return HIGH;
-  }else{
-    
   }
+  
   return LOW;
 }
 
@@ -130,6 +131,7 @@ void ISR(){
 //
 **********/
 void setup() {
+  // DIGITAL PIN
   pinMode(BAT1_REY, OUTPUT);
   pinMode(BAT2_REY, OUTPUT);
   pinMode(BUZZER, OUTPUT);
@@ -138,6 +140,7 @@ void setup() {
   pinMode(VIB_SEN, INPUT_PULLUP);
   pinMode(MOSFETOUT, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
+
   // ANALOG INPUT PIN: BAT1, BAT2, LDR
   digitalWrite(BAT1_REY,HIGH);
   digitalWrite(BAT2_REY,HIGH);
@@ -174,20 +177,22 @@ void loop() {
 	 Serial_println_f(bat1s);
 	 Serial_print_s("Bat2: ");
 	 Serial_println_f(bat2s);
-	 count=0; //reset counter
+	 count = 0; //reset counter
+   buzzcall = false;
   }else{
 	 count++;
   }
 
 //disable it if you no need system detect AC ON but adaptor not ON  
-  if(v5_on == HIGH && ac == LOW){ 
+  if(buzzcall){
+
+  }else if(v5_on == HIGH && ac == LOW && !buzzcall){ // ring buzzer if adaptor not yet on but AC voltage exist
     Buzzer(50);
     Buzzer(5);
     Buzzer(20);
     Buzzer(10);
-	delay(1000);
-  }else{
 
+    buzzcall = true;
   }
  //
 
@@ -213,20 +218,20 @@ Remove this comment for calibration */
     digitalWrite(MOSFETOUT, LOW);
     ledbuildin();
     quakedet = LOW;
-  }else{ 
-    
   }
 
 
-  if(bat1s <= 3.50 && bat2s <= 3.55 && ac == HIGH){			// VERY LOW BATTERY
+  if(!buzzcall){
+
+  }else if(bat1s <= battery_low && bat2s <= battery_low && ac == HIGH){			// VERY LOW BATTERY
     digitalWrite(MOSFETOUT, LOW);
-    delay(3000);
-  }else if(bat1s < 3.59 && bat2s <= 3.6 && ac == HIGH){ 	// LOW BATTERY
-    digitalWrite(MOSFETOUT, LOW);
+    delay(10000);
+  }else if(bat1s < (battery_low + 0.2) && bat2s <= (battery_low + 0.2) && ac == HIGH && !buzzcall){ 	// LOW BATTERY
+    digitalWrite(MOSFETOUT, HIGH);
     Buzzer(110);
     Buzzer(80);
     Buzzer(110);
-    delay(1000);
+    buzzcall = true;
   }else if(ac == HIGH && bacaldr < LDRtrig){				// LDR TRIGGER
     digitalWrite(MOSFETOUT, HIGH);
   }else if(bat1s < 1 && bat2s < 1){ 						// NO BATTERY EXIST!
